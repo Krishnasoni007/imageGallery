@@ -5,42 +5,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Responsive image gallery</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&display=swap');
-        body {
-            font-family: 'Cormorant SC', serif;
+        @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0px;
+            padding: 0px;
         }
+
+        body {
+            font-family: 'League Spartan', sans-serif;
+        }
+
         #main {
             display: flex;
             flex-wrap: wrap;
-            padding: 10px 30px;
+            padding: 10px 0px;
             /* max-width: 1200px; */
             margin: auto;
         }
+
         h1 {
-            text-align: center;
             font-size: calc(18px + 3vw);
-            background: url('images/weathering_with_you.jpg');
+            background: url('images/text-bg.png');
             background-position: center;
             -webkit-background-clip: text;
             color: transparent;
             font-weight: 700;
-            margin-bottom: -10px;
+            margin: 2% 1% -10px 1%;
         }
+
         .img {
             height: 250px;
-            margin: 20px;
+            margin: 1%;
             overflow: hidden;
             box-shadow: 2px 5px 10px -.5px #afafaf;
             cursor: pointer;
-            object-fit: cover;
-            object-position: center;
             position: relative;
             overflow: hidden;
             transition: all .2s;
         }
-        .img p{
+
+        .img p {
             position: absolute;
             top: 0%;
             left: 0%;
@@ -49,7 +56,8 @@
             justify-content: center;
             font-size: calc(10px + 1.2vw);
             text-align: center;
-            font-weight: 900;
+            font-weight: 200;
+            text-transform: uppercase;
             color: white;
             width: 100%;
             height: 250px;
@@ -58,35 +66,41 @@
             opacity: 0;
             transition: all .3s;
         }
-        .img:hover p{
+
+        .img:hover p {
             opacity: 1;
-            /* top: 35%; */
         }
+
         .img img {
             height: 250px;
             width: 100%;
+            object-fit: cover;
+            object-position: center;
         }
+
         @media(max-width: 1000px) {
             .img {
                 height: 150px;
-                margin: 16px;
             }
 
             .img img {
                 height: 150px;
             }
-            .img p{
+
+            .img p {
                 height: 150px;
             }
         }
+
         @media(max-width: 650px) {
             .img {
                 height: 130px;
-                margin: 12px;
             }
-            .img p{
+
+            .img p {
                 height: 130px;
             }
+
             .img img {
                 height: 130px;
             }
@@ -95,14 +109,16 @@
                 justify-content: center;
             }
         }
+
         @media(max-width: 350px) {
             .img {
                 height: 100px;
-                margin: 8px;
             }
-            .img p{
+
+            .img p {
                 height: 100px;
             }
+
             .img img {
                 height: 100px;
             }
@@ -156,8 +172,17 @@
             for (var i = 0; i < images.length; i++) {
                 var mainImg = images[i].querySelectorAll('img')[0]; // select the image inside .img div
                 var imgratio = mainImg.naturalWidth / mainImg.naturalHeight; // now we find the ratio of our images
-                var maxWidth = mainImg.offsetHeight * imgratio + (mainImg.offsetHeight * imgratio) / 4; // now we set max-width
-                images[i].setAttribute('style', `flex-grow:${imgratio};flex-shrink: ${imgratio};max-width:${maxWidth}px`); // set a style attribute of our img div
+                var maxWidth = mainImg.offsetHeight * imgratio + (mainImg.offsetHeight * imgratio) / 2; // now we set max-width
+                function myFunction(x) {
+                    if (x.matches) { // If media query matches
+                        images[i].setAttribute('style', `flex-grow:${imgratio};flex-shrink: ${imgratio};`); // set a style attribute of our img div
+                    } else {
+                        images[i].setAttribute('style', `flex-grow:${imgratio};flex-shrink: ${imgratio};max-width:${maxWidth}px`); // set a style attribute of our img div
+                    }
+                }
+                var x = window.matchMedia("(max-width: 550px)")
+                myFunction(x) // Call listener function at run time
+                x.addListener(myFunction) // Attach listener function on state changes
             }
         }
     </script>
